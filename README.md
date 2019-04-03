@@ -2,7 +2,9 @@
 SignalFx Golang Google Cloud Function Wrapper.
 
 ## Usage
-The SignalFx Go Google Cloud Function Wrapper is a wrapper around an Google Cloud Function Go function handler, used to instrument execution of the function and send metrics to SignalFx.
+The SignalFx Go Google Cloud Function Wrapper is a wrapper around an Google
+Cloud Function Go function handler, used to instrument execution of the function
+and send metrics to SignalFx.
 
 ### Installation
 To install run the command:
@@ -18,8 +20,9 @@ To determine what realm you are in, check your profile page in the SignalFx
 web application (click the avatar in the upper right and click My Profile).
 
 ### Environment Variable
-Set the SIGNALFX_AUTH_TOKEN environment variable with the appropriate SignalFx authentication token. Change the default 
-values of the other variables accordingly if desired.
+Set the SIGNALFX_AUTH_TOKEN environment variable with the appropriate SignalFx
+authentication token. Change the default values of the other variables
+accordingly if desired.
 
 `SIGNALFX_AUTH_TOKEN=<SignalFx authentication token>`
 
@@ -27,37 +30,36 @@ values of the other variables accordingly if desired.
 
 `SIGNALFX_SEND_TIMEOUT_SECONDS=5`
 
-###  Wrapping a function
-The SignalFx Go Google Cloud Function Wrapper wraps the handler `lambda.Handler`. Use the `lambda.NewHandler()` function to create the 
-handler by passing your Lambda handler function to `lambda.NewHandler()`. Pass the created handler to the 
-`sfxlambda.NewHandlerWrapper` function to create the wrapper `sfxlambda.HandlerWrapper`. Finally, pass the created wrapper 
-to the `sfxlambda.Start()` function. See the example below.
+### Wrapping a function
+The SignalFx Go Google Cloud Function Wrapper wraps the user cloud function.
+Pass the cloud function to `sfxgcf.NewHandlerWrapper` function to create the
+wrapper `sfxgcf.HandlerWrapper`. Finally, invoked the wrapped function by
+calling `Invoke` method of the wrapper. See the example below.
 
 ```
 import (
   ...
-  "github.com/aws/aws-lambda-go/lambda"
-  "github.com/signalfx/lambda-go"
+  "github.com/signalfx/google-cloud-function-go"
   ...
 )
 ...
 
-func handler(...) ... {
+func userFunc(w http.ResponseWriter, r *http.Request) {
   ...  
 }
 ...
 
-func main() {
+func main(w http.ResponseWriter, r *http.Request) {
   ...
-  handlerWrapper := sfxlambda.NewHandlerWrapper(lambda.NewHandler(handler))
-  sfxlambda.Start(handlerWrapper)
+  wrapper := sfxgcf.NewHandlerWrapper(userFunc)
+  wrapper.Invoke(w, r)
   ...
 }
 ...
 ```
 
 ### Metrics and dimensions sent by the wrapper
-The Lambda wrapper sends the following metrics to SignalFx:
+The Google Cloud Function wrapper sends the following metrics to SignalFx:
 
 | Metric Name  | Type | Description |
 | ------------- | ------------- | ---|
@@ -78,24 +80,25 @@ The Cloud Function wrapper adds the following dimensions to all data points sent
 
 
 ### Sending custom metric in the Google Cloud function
-Use the method `sfxgcf.SendDatapoint()` of `HandlerWrapper` to send custom metric datapoints to SignalFx from within your 
-Lambda handler function. A `sfxlambda.HandlerWrapper` variable needs to be declared globally in order to be accessible 
-from within your Lambda handler function. See example below.
+Use the method `sfxgcf.SendDatapoint()` of `HandlerWrapper` to send custom metric
+datapoints to SignalFx from within your cloud function. A `sfxgcf.HandlerWrapper`
+variable needs to be declared globally in order to be accessible from within
+your cloud function. See example below.
 
 ```
 import (
   ...
-  "github.com/aws/aws-lambda-go/lambda"
-  "github.com/signalfx/lambda-go"
+  "github.com/signalfx/google-cloud-function-go"
+  "github.com/signalfx/golib/datapoint"
   ...
 )
 ...
 
-var handlerWrapper sfxlambda.HandlerWrapper
+var wrapper sfxgcf.HandlerWrapper
 ...
 
-func handler(w http.ResponseWriter, r *http.Request) {
-  ...  
+func userFunc(w http.ResponseWriter, r *http.Request) {
+  ...
   // Custom counter metric.
   dp := datapoint.Datapoint {
       Metric: "db_calls",
@@ -104,25 +107,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
       Dimensions: map[string]string{"db_name":"mysql1",},
   }
   // Sending custom metric to SignalFx.
-  handlerWrapper.SendDatapoints([]*datapoint.Datapoint{&dp})
+  wrapper.SendDatapoints([]*datapoint.Datapoint{&dp})
   ...
 }
 ...
 
 func main(w http.ResponseWriter, r *http.Request) {
   ...
-  handlerWrapper := NewHandlerWrapper(handler)
-  handlerWrapper.Invoke(w, r)
+  wrapper := sfxgcf.NewHandlerWrapper(handler)
+  wrapper.Invoke(w, r)
   ...
 }
 ...
 ```
 
-### Testing locally.
-WIP ~~Run the command below in the lambda-go package folder~~
-
-WIP ~~`$ SIGNALFX_AUTH_TOKEN=test go test -v`~~
-
 ## License
 
-Apache Software License v2. Copyright © 2014-2019 SignalFx
+Apache Software License v2. Copyright © 2019 SignalFx
