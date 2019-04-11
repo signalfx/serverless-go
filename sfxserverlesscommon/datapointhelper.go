@@ -3,11 +3,12 @@ package sfxserverlesscommon
 import (
 	"context"
 	"fmt"
-	"github.com/signalfx/golib/datapoint"
 	"time"
+
+	"github.com/signalfx/golib/datapoint"
 )
 
-var SendDatapoints = func(ctx context.Context, dps []*datapoint.Datapoint) error {
+func SendDatapoints(ctx context.Context, dps []*datapoint.Datapoint) error {
 	now := time.Now()
 	for _, dp := range dps {
 		if dp.Timestamp.IsZero() {
@@ -20,21 +21,25 @@ var SendDatapoints = func(ctx context.Context, dps []*datapoint.Datapoint) error
 	return nil
 }
 
+// InvocationsDatapoint creates a datapoint to report function invocations count to SignalFx
 func InvocationsDatapoint() *datapoint.Datapoint {
 	dp := datapoint.Datapoint{Metric: "function.invocations", Value: datapoint.NewIntValue(1), MetricType: datapoint.Counter}
 	return &dp
 }
 
+// ColdStartsDatapoint creates a datapoint to report function cold starts count to SignalFx
 func ColdStartsDatapoint() *datapoint.Datapoint {
 	dp := datapoint.Datapoint{Metric: "function.cold_starts", Value: datapoint.NewIntValue(1), MetricType: datapoint.Counter}
 	return &dp
 }
 
+// DurationDatapoint creates a datapoint to report function duration to SignalFx
 func DurationDatapoint(elapsed time.Duration) *datapoint.Datapoint {
 	dp := datapoint.Datapoint{Metric: "function.duration", Value: datapoint.NewFloatValue(elapsed.Seconds()), MetricType: datapoint.Gauge}
 	return &dp
 }
 
+// ErrorsDatapoint creates a datapoint to report function errors count to SignalFx
 func ErrorsDatapoint() *datapoint.Datapoint {
 	dp := datapoint.Datapoint{Metric: "function.errors", Value: datapoint.NewIntValue(1), MetricType: datapoint.Counter}
 	return &dp

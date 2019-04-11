@@ -104,7 +104,7 @@ func userFunc(w http.ResponseWriter, r *http.Request) {
       Metric: "db_calls",
       Value: datapoint.NewIntValue(1),
       MetricType: datapoint.Counter,
-      Dimensions: map[string]string{"db_name":"mysql1",},
+      Dimensions: map[string]string{"db_name":"mysql1",}
   }
   // Sending custom metric to SignalFx.
   wrapper.SendDatapoints([]*datapoint.Datapoint{&dp})

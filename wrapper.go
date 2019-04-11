@@ -1,11 +1,11 @@
 package sfxgcf
 
 import (
-	"os"
-	"fmt"
-	"time"
 	"context"
+	"fmt"
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/signalfx/golib/datapoint"
 
@@ -21,7 +21,7 @@ const (
 // HandlerWrapper provides methods to invoke user function and send custom datapoints
 type HandlerWrapper struct {
 	handler      func(http.ResponseWriter, *http.Request)
-	ctx context.Context
+	ctx          context.Context
 	notColdStart bool
 }
 
@@ -70,7 +70,7 @@ type dimensions map[string]string
 
 func defaultDimensions(ctx context.Context) map[string]string {
 	dims := dimensions{
-		"metric_source": "gcf_wrapper",
+		"metric_source":            "gcf_wrapper",
 		"function_wrapper_version": name + "_" + version,
 	}
 	if os.Getenv("FUNCTION_REGION") != "" {
@@ -89,7 +89,14 @@ func defaultDimensions(ctx context.Context) map[string]string {
 	return dims
 }
 
+// InvocationsDatapoint exposes a function from common library to create a datapoint to report function invocations count to SignalFx
 var InvocationsDatapoint = sfxcommon.InvocationsDatapoint
+
+// ColdStartsDatapoint exposes a function from common library to create a datapoint to report function cold starts count to SignalFx
 var ColdStartsDatapoint = sfxcommon.ColdStartsDatapoint
+
+// DurationDatapoint exposes a function from common library to create a datapoint to report function duration to SignalFx
 var DurationDatapoint = sfxcommon.DurationDatapoint
+
+// ErrorsDatapoint exposes a function from common library to create a datapoint to report function errors count to SignalFx
 var ErrorsDatapoint = sfxcommon.ErrorsDatapoint
