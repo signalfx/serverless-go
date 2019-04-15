@@ -1,14 +1,16 @@
 // Package p contains an HTTP Cloud Function.
-package sfxgcf
+package sfxserverless
 
 import (
 	"encoding/json"
 	"fmt"
 	"html"
 	"net/http"
+
+	"github.com/seonsfx/serverless-go/gcfwrapper"
 )
 
-var wrapper HandlerWrapper
+var wrapper gcfwrapper.HandlerWrapper
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	var d struct {
@@ -28,6 +30,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 // Test prints the JSON encoded "message" field in the body
 // of the request or "Hello, World!" if there isn't one.
 func Test(w http.ResponseWriter, r *http.Request) {
-	wrapper = NewHandlerWrapper(handler)
+	wrapper = gcfwrapper.NewHandlerWrapper(handler)
 	wrapper.Invoke(w, r)
 }

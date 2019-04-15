@@ -1,4 +1,4 @@
-package sfxserverlesscommon
+package serverlesscommon
 
 import (
 	"context"

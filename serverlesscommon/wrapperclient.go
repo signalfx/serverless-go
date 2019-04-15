@@ -1,12 +1,13 @@
-package sfxserverlesscommon
+package serverlesscommon
 
 import (
-	"github.com/signalfx/golib/sfxclient"
-	log "github.com/sirupsen/logrus"
 	"net/url"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/signalfx/golib/sfxclient"
+	log "github.com/sirupsen/logrus"
 )
 
 var handlerFuncWrapperClient *sfxclient.HTTPSink

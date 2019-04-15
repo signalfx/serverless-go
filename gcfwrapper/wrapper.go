@@ -1,4 +1,4 @@
-package sfxgcf
+package gcfwrapper
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 
 	"github.com/signalfx/golib/datapoint"
 
-	sfxcommon "github.com/signalfx/google-cloud-function-go/sfxserverlesscommon"
+	sfxcommon "github.com/seonsfx/serverless-go/serverlesscommon"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -74,16 +74,16 @@ func defaultDimensions(ctx context.Context) map[string]string {
 		"function_wrapper_version": name + "_" + version,
 	}
 	if os.Getenv("FUNCTION_REGION") != "" {
-		dims["gcp_region"] = os.Getenv("FUNCTION_REGION")
+		dims["gcf_region"] = os.Getenv("FUNCTION_REGION")
 	}
 	if os.Getenv("GCP_PROJECT") != "" {
-		dims["gcp_project_id"] = os.Getenv("GCP_PROJECT")
+		dims["gcf_project_id"] = os.Getenv("GCP_PROJECT")
 	}
 	if os.Getenv("FUNCTION_NAME") != "" {
-		dims["gcp_function_name"] = os.Getenv("FUNCTION_NAME")
+		dims["gcf_function_name"] = os.Getenv("FUNCTION_NAME")
 	}
 	if os.Getenv("X_GOOGLE_FUNCTION_VERSION") != "" {
-		dims["gcp_function_version"] = os.Getenv("X_GOOGLE_FUNCTION_VERSION")
+		dims["gcf_function_version"] = os.Getenv("X_GOOGLE_FUNCTION_VERSION")
 	}
 
 	return dims

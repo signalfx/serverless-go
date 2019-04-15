@@ -1,4 +1,4 @@
-module github.com/signalfx/google-cloud-function-go
+module github.com/seonsfx/serverless-go
 
 require gopkg.in/logfmt.v0 v0.1.0
 
