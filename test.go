@@ -7,7 +7,7 @@ import (
 	"html"
 	"net/http"
 
-	"github.com/seonsfx/serverless-go/gcfwrapper"
+	"github.com/signalfx/serverless-go/gcfwrapper"
 )
 
 var wrapper gcfwrapper.HandlerWrapper

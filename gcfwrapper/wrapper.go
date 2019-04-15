@@ -9,7 +9,7 @@ import (
 
 	"github.com/signalfx/golib/datapoint"
 
-	sfxcommon "github.com/seonsfx/serverless-go/serverlesscommon"
+	sfxcommon "github.com/signalfx/serverless-go/serverlesscommon"
 	log "github.com/sirupsen/logrus"
 )
 

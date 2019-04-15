@@ -1,4 +1,4 @@
-module github.com/seonsfx/serverless-go
+module github.com/signalfx/serverless-go
 
 require gopkg.in/logfmt.v0 v0.1.0
 
