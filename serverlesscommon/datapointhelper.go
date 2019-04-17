@@ -8,6 +8,7 @@ import (
 	"github.com/signalfx/golib/datapoint"
 )
 
+// SendDatapoints sends custom metric datapoints to SignalFx.
 func SendDatapoints(ctx context.Context, dps []*datapoint.Datapoint) error {
 	now := time.Now()
 	for _, dp := range dps {

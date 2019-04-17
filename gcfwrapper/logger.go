@@ -5,14 +5,22 @@ import (
 	"os"
 )
 
-type Logger struct {
-	log   *log.Logger
-	error *log.Logger
+type gcfLogger struct {
+	log *log.Logger
+	err *log.Logger
 }
 
-// When log : logger.log("Logging.")
-// When errored : logger.error("Error!")
-var logger = &Logger{
-	log:   log.New(os.Stdout, "sfx_wrapper", 0),
-	error: log.New(os.Stderr, "sfx_wrapper", 0),
+// When log : logger.Log.("Logging.")
+// When errored : logger.Error("Error!")
+var logger = &gcfLogger{
+	log: log.New(os.Stdout, "sfx_wrapper", 0),
+	err: log.New(os.Stderr, "sfx_wrapper", 0),
+}
+
+func (l *gcfLogger) Log(str string) {
+	l.log.Println(str)
+}
+
+func (l *gcfLogger) Error(str string) {
+	l.err.Println(str)
 }

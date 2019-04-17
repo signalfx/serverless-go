@@ -33,7 +33,7 @@ accordingly if desired.
 ### Wrapping a function
 The SignalFx Go Google Cloud Function Wrapper wraps the user cloud function.
 Pass the cloud function to `gcfwrapper.NewHandlerWrapper` function to create the
-wrapper `gcfwrapper.HandlerWrapper`. Finally, invoked the wrapped function by
+wrapper `gcfwrapper.HandlerWrapper`. Finally, invoke the wrapped function by
 calling `Invoke` method of the wrapper. See the example below.
 
 ```
@@ -104,7 +104,7 @@ func userFunc(w http.ResponseWriter, r *http.Request) {
       Metric: "db_calls",
       Value: datapoint.NewIntValue(1),
       MetricType: datapoint.Counter,
-      Dimensions: map[string]string{"db_name":"mysql1",}
+      Dimensions: map[string]string{"db_name": "mysql1"},
   }
   // Sending custom metric to SignalFx.
   wrapper.SendDatapoints([]*datapoint.Datapoint{&dp})

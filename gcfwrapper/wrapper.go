@@ -10,7 +10,6 @@ import (
 	"github.com/signalfx/golib/datapoint"
 
 	sfxcommon "github.com/signalfx/serverless-go/serverlesscommon"
-	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -38,13 +37,20 @@ func (hw *HandlerWrapper) Invoke(w http.ResponseWriter, r *http.Request) {
 		dps = append(dps, sfxcommon.ColdStartsDatapoint())
 		hw.notColdStart = true
 	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			dps = append(dps, sfxcommon.ErrorsDatapoint())
+		}
+
+		if err := hw.SendDatapoints(dps); err != nil {
+			logger.Error(err.Error())
+		}
+	}()
+
 	start := time.Now()
 	hw.handler(w, r)
 	dps = append(dps, sfxcommon.DurationDatapoint(time.Since(start)))
-
-	if err := hw.SendDatapoints(dps); err != nil {
-		log.Error(err)
-	}
 }
 
 // SendDatapoints sends custom metric datapoints to SignalFx.
