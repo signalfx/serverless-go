@@ -1,4 +1,3 @@
-// Package p contains an HTTP Cloud Function.
 package sfxserverless
 
 import (
@@ -27,9 +26,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, html.EscapeString(d.Message))
 }
 
-// Test prints the JSON encoded "message" field in the body
+// EntryPoint prints the JSON encoded "message" field in the body
 // of the request or "Hello, World!" if there isn't one.
-func Test(w http.ResponseWriter, r *http.Request) {
+func EntryPoint(w http.ResponseWriter, r *http.Request) {
 	wrapper = gcfwrapper.NewHandlerWrapper(handler)
 	wrapper.Invoke(w, r)
 }
