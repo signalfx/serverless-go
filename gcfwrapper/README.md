@@ -2,7 +2,7 @@
 SignalFx Golang Google Cloud Function Wrapper.
 
 ## Usage
-The SignalFx Go Google Cloud Function Wrapper is a wrapper around an Google
+The SignalFx Go Google Cloud Function Wrapper is a wrapper around a Google
 Cloud Function Go function handler, used to instrument execution of the function
 and send metrics to SignalFx.
 
@@ -20,11 +20,11 @@ To determine what realm you are in, check your profile page in the SignalFx
 web application (click the avatar in the upper right and click My Profile).
 
 ### Environment Variable
-Set the SIGNALFX_AUTH_TOKEN environment variable with the appropriate SignalFx
+Set the SIGNALFX_ACCESS_TOKEN environment variable with the appropriate SignalFx
 authentication token. Change the default values of the other variables
 accordingly if desired.
 
-`SIGNALFX_AUTH_TOKEN=<SignalFx authentication token>`
+`SIGNALFX_ACCESS_TOKEN=<SignalFx authentication token>`
 
 `SIGNALFX_INGEST_ENDPOINT=https://ingest.{REALM}.signalfx.com/v2/datapoint`
 

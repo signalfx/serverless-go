@@ -13,7 +13,7 @@ import (
 var handlerFuncWrapperClient *sfxclient.HTTPSink
 
 const (
-	sfxAuthToken          = "SIGNALFX_AUTH_TOKEN"
+	sfxAuthToken          = "SIGNALFX_ACCESS_TOKEN"
 	sfxIngestEndpoint     = "SIGNALFX_INGEST_ENDPOINT"
 	sfxSendTimeoutSeconds = "SIGNALFX_SEND_TIMEOUT_SECONDS"
 )
