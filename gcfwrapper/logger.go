@@ -17,10 +17,10 @@ var logger = &gcfLogger{
 	err: log.New(os.Stderr, "sfx_wrapper", 0),
 }
 
-func (l *gcfLogger) Log(str string) {
-	l.log.Println(str)
+func (l *gcfLogger) Log(v ...interface{}) {
+	l.log.Println(v...)
 }
 
-func (l *gcfLogger) Error(str string) {
-	l.err.Println(str)
+func (l *gcfLogger) Error(v ...interface{}) {
+	l.err.Println(v...)
 }

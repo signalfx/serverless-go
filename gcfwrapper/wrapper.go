@@ -40,6 +40,7 @@ func (hw *HandlerWrapper) Invoke(w http.ResponseWriter, r *http.Request) {
 
 	defer func() {
 		if r := recover(); r != nil {
+			logger.Log("Recovered in the cloud function. ", r)
 			dps = append(dps, sfxcommon.ErrorsDatapoint())
 		}
 
